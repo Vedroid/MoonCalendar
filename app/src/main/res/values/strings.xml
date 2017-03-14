@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Moon Calendar v0.9b</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="text_wait">Pls Wait…</string>
+    <string name="text_pay_info">Pay text info</string>
+    <string name="text_set_bday">Set BDay</string>
+    <string name="text_invalid_date">Invalid date.</string>
+    <string name="alert_dialog_title">Buy?</string>
+    <string name="alert_dialog_message">You want to buy?\nIt`s FREE!!!</string>
+    <string name="text_no">No</string>
+    <string name="text_yes">Yes</string>
+    <string name="text_no_internet">Could not connect to Internet.\n
+        Check the your connection and try again.</string>
+    <string name="text_no_conn_server">\nCould not connect to server\n
+       Please try again later.\n\n</string>
+
+    <string name="butt_personal_prediction">Personal prediction</string>
+    <string name="butt_refresh">Refresh</string>
+    <string name="butt_previous_day">Previous\nday</string>
+    <string name="butt_next_day">Sonraki\ngün</string>  <!--next day-->.
+    <string name="butt_back">Back</string>
+    <string name="butt_next">Next</string>
+    <string name="butt_buy">Buy</string>
+
+</resources>
