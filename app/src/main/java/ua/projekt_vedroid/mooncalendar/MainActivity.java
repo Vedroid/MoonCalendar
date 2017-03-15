@@ -18,8 +18,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String URL = "http://192.168.0.100:7878";
-    //static final String URL = "http://192.168.0.103:7878";
+    static final String URL = "http://192.168.1.102:7878";      //Vad
+    //static final String URL = "http://192.168.0.103:7878";    //Boda
 
     public static SharedPreferences mSettings;
 
@@ -40,8 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static String result = "Null";
     private static int currentYear = calendar.get(Calendar.YEAR);
-    private static int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-    private static int day = currentDay;
+    //private static int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+    private static int day; //= currentDay;
+    private static int lunarDay;
     private boolean firstCon = true;
     private int[] imgArr;
 
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setImageView() {
-        imageView.setImageResource(imgArr[day - 1]);
+        imageView.setImageResource(imgArr[lunarDay - 1]);
     }
 
     private void initThread() {                             //Инициализация
@@ -157,11 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickRef(View view) {
         textView.setText(R.string.text_wait);
-        if (payID) {
-            day = currentDay;
-        } else {
-            day = 0;
-        }
+        day = 0;
         if (firstCon) {
             firstCon = false;
             initThread();
@@ -174,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(R.string.text_wait);
         if (payID) {
             day++;
-            if (day > 30) day = 1;
+            //if (day > 30) day = 1;
             refThread();
             setTextView();
             setImageView();
@@ -188,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(R.string.text_wait);
         if (payID) {
             day--;
-            if (day < 1) day = 30;
+            //if (day < 1) day = 30;
             refThread();
             setTextView();
             setImageView();
@@ -226,5 +223,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static void setResult(String inputStr) {
         result = inputStr;
+    }
+
+    public static void setLunarDay(String inputFirstLine) {
+        lunarDay = Integer.parseInt(inputFirstLine);
     }
 }

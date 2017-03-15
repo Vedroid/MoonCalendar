@@ -13,7 +13,12 @@ class URLCon extends Thread {
     private BufferedReader in = null;
     private String sURL = "";
     private String inputStr;
+    private String inputFirstLine;
     private boolean pay = false;
+
+    URLCon(String url) {
+        this.sURL = url + "/test";
+    }
 
     URLCon(String url, int d, boolean b) {
         if (b) {
@@ -40,6 +45,8 @@ class URLCon extends Thread {
 
             inputStr = "";
             String inputLine;
+
+            inputFirstLine = in.readLine();
             while ((inputLine = in.readLine()) != null) {               // Считывание по строке
                 inputStr = inputStr + inputLine + "<br>";               // Запись строк в одну
             }
@@ -57,6 +64,7 @@ class URLCon extends Thread {
                 PersonalPredictionActivity.setResult(inputStr);
             } else {
                 MainActivity.setResult(inputStr);
+                MainActivity.setLunarDay(inputFirstLine);
             }
             try {
                 if (in != null) {
