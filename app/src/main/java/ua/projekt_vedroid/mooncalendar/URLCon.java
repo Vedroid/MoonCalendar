@@ -14,10 +14,11 @@ class URLCon extends Thread {
     private String sURL = "";
     private String inputStr;            //Текст предсказания
     private String inputFirstLine;      //Первая строка (Лунный день)
-    private boolean pay = false;
+    private int urlId;
 
     URLCon(String url) {
         this.sURL = url + "/test";
+        urlId = 0;
     }
 
     URLCon(String url, int d, boolean b) {
@@ -26,11 +27,12 @@ class URLCon extends Thread {
         } else {
             this.sURL = url + "/day?d=0";
         }
+        urlId = 1;
     }
 
     URLCon(String url, int d, int m, int y) {
         this.sURL = url + "/pay?d=" + d + "&m=" + m + "&y=" + y;
-        pay = true;
+        urlId = 2;
     }
 
     @Override
@@ -65,12 +67,17 @@ class URLCon extends Thread {
             err = true;
             inputStr = "Exception " + e.toString();
         } finally {
-            if (pay) {                                                  // Отправка результата
-                PersonalPredictionActivity.setResult(inputFirstLine + inputStr);
-            } else {
-                MainActivity.setResult(inputStr);
-                if (err) inputFirstLine = "16";
-                MainActivity.setLunarDay(inputFirstLine);
+            switch (urlId) {                                            // Отправка результата
+                case 0:
+                    break;
+                case 1:
+                    MainActivity.setResult(inputStr);
+                    if (err) inputFirstLine = "16";
+                    MainActivity.setLunarDay(inputFirstLine);
+                    break;
+                case 2:
+                    PersonalPredictionActivity.setResult(inputFirstLine + inputStr);
+                    break;
             }
             try {
                 if (in != null) {
