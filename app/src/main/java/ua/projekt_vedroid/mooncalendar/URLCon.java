@@ -66,7 +66,7 @@ class URLCon extends Thread {
             inputStr = "Exception " + e.toString();
         } finally {
             if (pay) {                                                  // Отправка результата
-                PersonalPredictionActivity.setResult(inputStr);
+                PersonalPredictionActivity.setResult(inputFirstLine + inputStr);
             } else {
                 MainActivity.setResult(inputStr);
                 if (err) inputFirstLine = "16";
