@@ -13,7 +13,7 @@ class URLCon extends Thread {
     private BufferedReader in = null;
     private String sURL = "";
     private String inputStr;            //Текст предсказания
-    private String inputFirstLine;      //Лунный день
+    private String inputFirstLine;      //Первая строка (Лунный день)
     private boolean pay = false;
 
     URLCon(String url) {
