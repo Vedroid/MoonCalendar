@@ -12,8 +12,8 @@ class URLCon extends Thread {
 
     private BufferedReader in = null;
     private String sURL = "";
-    private String inputStr;
-    private String inputFirstLine;
+    private String inputStr;            //Текст предсказания
+    private String inputFirstLine;      //Лунный день
     private boolean pay = false;
 
     URLCon(String url) {
@@ -35,6 +35,7 @@ class URLCon extends Thread {
 
     @Override
     public void run() {                                                 // Смотри в самый низ!!!!!!!!!!
+        boolean err = false;
         try {
             URL url = new URL(sURL);
             URLConnection urlConnection = url.openConnection();
@@ -51,19 +52,24 @@ class URLCon extends Thread {
                 inputStr = inputStr + inputLine + "<br>";               // Запись строк в одну
             }
         } catch (MalformedURLException e) {
+            err = true;
             inputStr = "MalformedURLException " + e.toString();
         } catch (SocketTimeoutException e) {
+            err = true;
             inputStr = "\nНе удалось подключится к серверу\n" +
                     "Повторите попытку позже.\n\n" + e.toString();              // Убрать e.туСтринг!!!!!!!!!!!!!!!!!!!
         } catch (IOException e) {
+            err = true;
             inputStr = "IOException " + e.toString();
         } catch (Exception e) {
+            err = true;
             inputStr = "Exception " + e.toString();
         } finally {
             if (pay) {                                                  // Отправка результата
                 PersonalPredictionActivity.setResult(inputStr);
             } else {
                 MainActivity.setResult(inputStr);
+                if (err) inputFirstLine = "16";
                 MainActivity.setLunarDay(inputFirstLine);
             }
             try {
