@@ -8,6 +8,8 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import ua.projekt_vedroid.mooncalendar.service.ServiceNewPrediction;
+
 class URLCon extends Thread {
 
     private BufferedReader in = null;
@@ -69,7 +71,10 @@ class URLCon extends Thread {
         } finally {
             switch (urlId) {                                            // Отправка результата
                 case 0:
+                    if (err) inputFirstLine = "16";
+                    ServiceNewPrediction.setLunarDay(inputFirstLine);
                     break;
+
                 case 1:
                     MainActivity.setResult(inputStr);
                     if (err) inputFirstLine = "16";

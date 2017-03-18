@@ -18,8 +18,7 @@
         <activity
             android:name="ua.projekt_vedroid.mooncalendar.PayInfoActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="ua.projekt_vedroid.mooncalendar.PersonalPredictionActivity"
             android:noHistory="true"
@@ -27,11 +26,6 @@
         <activity
             android:name="ua.projekt_vedroid.mooncalendar.EnterBDayActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait" />
-
-        <service
-            android:name="ua.projekt_vedroid.mooncalendar.service.ServiceNewPrediction"
-            android:enabled="true"
             android:screenOrientation="portrait" />
 
         <activity
@@ -44,6 +38,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="ua.projekt_vedroid.mooncalendar.service.ServiceNewPrediction"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":serviceNotif" >
+            </service>
     </application>
 
 </manifest>

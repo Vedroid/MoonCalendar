@@ -18,8 +18,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String URL = "http://192.168.1.102:7878";      //Vad
-    //static final String URL = "http://192.168.0.103:7878";    //Boda
+    //static final String URL = "http://192.168.1.102:7878";      //Vad
+    static final String URL = "http://192.168.0.100:7878";    //Boda
 
     public static SharedPreferences mSettings;
 
