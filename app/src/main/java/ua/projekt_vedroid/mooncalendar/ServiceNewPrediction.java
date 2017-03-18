@@ -4,11 +4,15 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 public class ServiceNewPrediction extends Service {
+
+    public static final String APP_PREFERENCES_LD = "LD";
 
     private NotificationManager nm;
     private static int lunarDay;
@@ -17,17 +21,33 @@ public class ServiceNewPrediction extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        URLCon urlCon = new URLCon(MainActivity.URL);
-        urlCon.start();                                         //Запуск потока
-        waitThread(urlCon);
+
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
     public int onStartCommand(Intent intent, int flags, int startID) {
+
+        URLCon urlCon = new URLCon(MainActivity.URL);
+        urlCon.start();                                         //Запуск потока
+        waitThread(urlCon);
+
+        MainActivity.mSettings = getSharedPreferences(
+                MainActivity.APP_PREFERENCES, Context.MODE_PRIVATE); //Загрузка настроек
+
+        if (MainActivity.mSettings.contains(APP_PREFERENCES_LD)) {
+            day = MainActivity.mSettings.getInt(
+                    APP_PREFERENCES_LD, day);
+        }
+
         if (lunarDay != day) {
             showNotification();
             day = lunarDay;
         }
+
+        SharedPreferences.Editor editor = MainActivity.mSettings.edit();
+        editor.putInt(APP_PREFERENCES_LD, day);
+        editor.apply();
+
         return super.onStartCommand(intent, flags, startID);
     }
 
