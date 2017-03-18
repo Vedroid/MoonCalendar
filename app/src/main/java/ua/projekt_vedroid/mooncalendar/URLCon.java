@@ -64,7 +64,8 @@ class URLCon extends Thread {
                     "Повторите попытку позже.\n\n" + e.toString();              // Убрать e.туСтринг!!!!!!!!!!!!!!!!!!!
         } catch (IOException e) {
             err = true;
-            inputStr = "IOException " + e.toString();
+            inputStr = "\nНе удалось подключится к серверу\n" +
+                    "Повторите попытку позже.\n\nIOException " + e.toString();
         } catch (Exception e) {
             err = true;
             inputStr = "Exception " + e.toString();
@@ -74,7 +75,6 @@ class URLCon extends Thread {
                     if (err) inputFirstLine = "16";
                     ServiceNewPrediction.setLunarDay(inputFirstLine);
                     break;
-
                 case 1:
                     MainActivity.setResult(inputStr);
                     if (err) inputFirstLine = "16";
