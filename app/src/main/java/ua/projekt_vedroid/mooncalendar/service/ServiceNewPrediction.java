@@ -19,20 +19,22 @@ public class ServiceNewPrediction extends Service {
     private NotificationManager nm;
     private static int lunarDay;
     private static int day = 0;
+    static final String URL = "http://93.72.95.145:7878;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE) ;
+        URLCon urlCon = new URLCon();
+        nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
-        public int onStartCommand(Intent intent, int flags, int startID){
- if (lunarDay != day) {
+    public int onStartCommand(Intent intent, int flags, int startID) {
+        if (lunarDay != day) {
             showNotification();
-            day=lunarDay;
+            day = lunarDay;
         }
-         return super.onStartCommand(intent, flags, startID);
+        return super.onStartCommand(intent, flags, startID);
     }
 
     public void showNotification() {
