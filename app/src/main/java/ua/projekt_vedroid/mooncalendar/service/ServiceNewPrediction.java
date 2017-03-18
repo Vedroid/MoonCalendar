@@ -24,16 +24,16 @@ public class ServiceNewPrediction extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (lunarDay != day) {
-            showNotification();
-        }
+        nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE) ;
     }
- /*       public int onStartCommand(Intent intent, int flags, int startID){
 
+        public int onStartCommand(Intent intent, int flags, int startID){
+ if (lunarDay != day) {
+            showNotification();
+            day++;
+        }
          return super.onStartCommand(intent, flags, startID);
-    }*/
+    }
 
     public void showNotification() {
         Notification.Builder builder = new Notification.Builder(getApplicationContext());
