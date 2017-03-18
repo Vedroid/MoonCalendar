@@ -30,7 +30,7 @@ public class ServiceNewPrediction extends Service {
         public int onStartCommand(Intent intent, int flags, int startID){
  if (lunarDay != day) {
             showNotification();
-            day++;
+            day=lunarDay;
         }
          return super.onStartCommand(intent, flags, startID);
     }
