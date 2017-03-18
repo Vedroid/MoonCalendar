@@ -4,28 +4,22 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.IBinder;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
-
-import ua.projekt_vedroid.mooncalendar.MainActivity;
-import ua.projekt_vedroid.mooncalendar.R;
 
 public class ServiceNewPrediction extends Service {
 
     private NotificationManager nm;
     private static int lunarDay;
     private static int day = 0;
-    static final String URL = "http://93.72.95.145:7878";
-
 
     @Override
     public void onCreate() {
         super.onCreate();
-        URLCon urlCon = new URLCon(URL);
+        URLCon urlCon = new URLCon(MainActivity.URL);
+        urlCon.start();                                         //Запуск потока
+        waitThread(urlCon);
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
@@ -63,6 +57,16 @@ public class ServiceNewPrediction extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    private void waitThread(Thread thread) {
+        if (thread.isAlive()) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public static void setLunarDay(String inputFirstLine) {
