@@ -40,12 +40,12 @@
         </activity>
 
         <service
-            android:name="ua.projekt_vedroid.mooncalendar.service.ServiceNewPrediction"
+            android:name="ua.projekt_vedroid.mooncalendar.ServiceNewPrediction"
             android:enabled="true"
             android:exported="true"
             android:process=":serviceNotif" >
             </service>
-        <receiver android:name=".service.NotificReceiver"
+        <receiver android:name=".NotificReceiver"
             android:enabled="true"
             android:permission=".android.premission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>

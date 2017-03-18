@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         startService(new Intent(this,
-                ua.projekt_vedroid.mooncalendar.service.ServiceNewPrediction.class));
+                ServiceNewPrediction.class));
 
         initTextView();
         initImage();

@@ -1,4 +1,4 @@
-package ua.projekt_vedroid.mooncalendar.service;
+package ua.projekt_vedroid.mooncalendar;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -19,13 +19,13 @@ public class ServiceNewPrediction extends Service {
     private NotificationManager nm;
     private static int lunarDay;
     private static int day = 0;
-    static final String URL = "http://93.72.95.145:7878;
+    static final String URL = "http://93.72.95.145:7878";
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        URLCon urlCon = new URLCon();
+        URLCon urlCon = new URLCon(URL);
         nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 

@@ -1,4 +1,4 @@
-package ua.projekt_vedroid.mooncalendar.service;
+package ua.projekt_vedroid.mooncalendar;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
