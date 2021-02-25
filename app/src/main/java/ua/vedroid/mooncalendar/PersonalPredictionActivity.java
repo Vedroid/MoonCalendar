@@ -1,17 +1,17 @@
-package ua.projekt_vedroid.mooncalendar;
+package ua.vedroid.mooncalendar;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
-public class PersonalPredictionActivity extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
 
+public class PersonalPredictionActivity extends AppCompatActivity {
     private TextView textView;
 
     private static String result = "Null";
@@ -31,7 +31,7 @@ public class PersonalPredictionActivity extends AppCompatActivity {
         textView.setText(Html.fromHtml(result));
     }
 
-    private void initThread() {                                 //Инициализация
+    private void initThread() {
         if (MainActivity.mSettings.contains(MainActivity.APP_PREFERENCES_BDAY)) {
             d = MainActivity.mSettings.getInt(MainActivity.APP_PREFERENCES_BDAY, d);
         }
@@ -42,9 +42,9 @@ public class PersonalPredictionActivity extends AppCompatActivity {
             y = MainActivity.mSettings.getInt(MainActivity.APP_PREFERENCES_BYEAR, y);
         }
         if (isOnline()) {
-            URLCon uc = new URLCon(MainActivity.URL, d, m, y);
-            uc.start();                                         //Запуск потока
-            waitThread(uc);                                     //Ожидание завершения потока
+            URLCon uc = new URLCon(MainActivity.SERVER_URL, d, m, y);
+            uc.start();
+            waitThread(uc);
         } else {
             result = getResources().getString(R.string.text_no_internet);
         }
