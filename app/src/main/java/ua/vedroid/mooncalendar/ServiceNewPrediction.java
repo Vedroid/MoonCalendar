@@ -1,4 +1,4 @@
-package ua.projekt_vedroid.mooncalendar;
+package ua.vedroid.mooncalendar;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -8,10 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
 
 public class ServiceNewPrediction extends Service {
-
     public static final String APP_PREFERENCES_LD = "LD";
 
     private NotificationManager nm;
@@ -27,12 +25,12 @@ public class ServiceNewPrediction extends Service {
 
     public int onStartCommand(Intent intent, int flags, int startID) {
 
-        URLCon urlCon = new URLCon(MainActivity.URL);
-        urlCon.start();                                         //Запуск потока
+        URLCon urlCon = new URLCon(MainActivity.SERVER_URL);
+        urlCon.start();
         waitThread(urlCon);
 
         MainActivity.mSettings = getSharedPreferences(
-                MainActivity.APP_PREFERENCES, Context.MODE_PRIVATE); //Загрузка настроек
+                MainActivity.APP_PREFERENCES, Context.MODE_PRIVATE);
 
         if (MainActivity.mSettings.contains(APP_PREFERENCES_LD)) {
             day = MainActivity.mSettings.getInt(
@@ -55,7 +53,7 @@ public class ServiceNewPrediction extends Service {
         Notification.Builder builder = new Notification.Builder(getApplicationContext());
 
         Intent intent = new Intent(getApplicationContext(),
-                ua.projekt_vedroid.mooncalendar.MainActivity.class);
+                ua.vedroid.mooncalendar.MainActivity.class);
         PendingIntent pendingIntent =
                 PendingIntent.getActivity(getApplicationContext(),
                         0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -73,7 +71,6 @@ public class ServiceNewPrediction extends Service {
         nm.notify(1, notification);
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;

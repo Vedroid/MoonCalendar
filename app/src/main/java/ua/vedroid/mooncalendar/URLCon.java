@@ -1,4 +1,4 @@
-package ua.projekt_vedroid.mooncalendar;
+package ua.vedroid.mooncalendar;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,12 +9,11 @@ import java.net.URL;
 import java.net.URLConnection;
 
 class URLCon extends Thread {
-
     private BufferedReader in = null;
     private String sURL = "";
-    private String inputStr;            //Текст предсказания
-    private String inputFirstLine;      //Первая строка (Лунный день)
-    private int urlId;
+    private String inputStr;
+    private String inputFirstLine;
+    private final int urlId;
 
     URLCon(String url) {
         this.sURL = url + "/test";
@@ -36,12 +35,12 @@ class URLCon extends Thread {
     }
 
     @Override
-    public void run() {                                                 // Смотри в самый низ!!!!!!!!!!
+    public void run() {
         boolean err = false;
         try {
             URL url = new URL(sURL);
             URLConnection urlConnection = url.openConnection();
-            urlConnection.setConnectTimeout(3 * 1000);                  // Set timeout to 3 seconds
+            urlConnection.setConnectTimeout(3 * 1000);
             urlConnection.connect();
 
             in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -50,8 +49,8 @@ class URLCon extends Thread {
             String inputLine;
 
             inputFirstLine = in.readLine();
-            while ((inputLine = in.readLine()) != null) {               // Считывание по строке
-                inputStr = inputStr + inputLine + "<br>";               // Запись строк в одну
+            while ((inputLine = in.readLine()) != null) {
+                inputStr = inputStr + inputLine + "<br>";
             }
         } catch (MalformedURLException e) {
             err = true;
@@ -59,16 +58,16 @@ class URLCon extends Thread {
         } catch (SocketTimeoutException e) {
             err = true;
             inputStr = "\nНе удалось подключится к серверу\n" +
-                    "Повторите попытку позже.\n\n" + e.toString();              // Убрать e.туСтринг!!!!!!!!!!!!!!!!!!!
+                    "Повторите попытку позже.\n\n";
         } catch (IOException e) {
             err = true;
             inputStr = "\nНе удалось подключится к серверу\n" +
-                    "Повторите попытку позже.\n\nIOException " + e.toString();
+                    "Повторите попытку позже.\n\nIOException ";
         } catch (Exception e) {
             err = true;
             inputStr = "Exception " + e.toString();
         } finally {
-            switch (urlId) {                                            // Отправка результата
+            switch (urlId) {
                 case 0:
                     if (err) inputFirstLine = "16";
                     ServiceNewPrediction.setLunarDay(inputFirstLine);

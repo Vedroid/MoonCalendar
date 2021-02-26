@@ -1,4 +1,5 @@
-package ua.projekt_vedroid.mooncalendar;
+package ua.vedroid.mooncalendar;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,7 +7,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,37 +14,31 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-
-    //static final String URL = "http://192.168.1.102:7878";    //Vad Local
-    //static final String URL = "http://93.72.59.160:7878";     //Vad
-    //static final String URL = "http://192.168.0.100:7878";    //Boda Local
-    static final String URL = "http://93.72.95.145:7878";    //Boda
-
-    public static SharedPreferences mSettings;
-
+    public static final String SERVER_URL = "http://93.72.95.145:7878";
     public static final String APP_PREFERENCES = "settings";
     public static final String APP_PREFERENCES_BDAY = "Day";
     public static final String APP_PREFERENCES_BMONTH = "Month";
     public static final String APP_PREFERENCES_BYEAR = "Year";
     public static final String APP_PREFERENCES_pID = "pID";
     public static final String APP_PREFERENCES_DIsSet = "DIsSet";
+    private static final Calendar calendar = Calendar.getInstance();
+    private static final int currentYear = calendar.get(Calendar.YEAR);
 
+    public static SharedPreferences mSettings;
     static boolean bDayIsSet = false;
     static boolean payID = false;
+    private static String result = "Null";
+    private static int day;
+    private static int lunarDay;
 
-    private static Calendar calendar = Calendar.getInstance();
     private TextView textView;
     private ImageView imageView;
     private URLCon uc;
-
-    private static String result = "Null";
-    private static int currentYear = calendar.get(Calendar.YEAR);
-    //private static int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
-    private static int day; //= currentDay;
-    private static int lunarDay;
     private boolean firstCon = true;
     private int[] imgArr;
 
@@ -55,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE); //Загрузка настроек
+        mSettings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         if (mSettings.contains(APP_PREFERENCES_pID)) {
             payID = mSettings.getBoolean(APP_PREFERENCES_pID, payID);
         }
@@ -70,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         initImage();
     }
 
-    private void initTextView() {    //Инициализация TextView
+    private void initTextView() {
         textView = (TextView) findViewById(R.id.textView);
         textView.setText(R.string.text_wait);
         initThread();
@@ -105,17 +99,17 @@ public class MainActivity extends AppCompatActivity {
         imageView.setImageResource(imgArr[lunarDay - 1]);
     }
 
-    private void initThread() {                             //Инициализация
+    private void initThread() {
         if (isOnline()) {
-            uc = new URLCon(URL, day, payID);               //Создание потока
-            uc.start();                                     //Запуск потока
-            waitThread(uc);                                 //Ожидание завершения потока
+            uc = new URLCon(SERVER_URL, day, payID);
+            uc.start();
+            waitThread(uc);
         } else {
             result = getResources().getString(R.string.text_no_internet);
         }
     }
 
-    private void refThread() {                              //Перезапуск
+    private void refThread() {
         if (uc != null) waitThread(uc);
         initThread();
     }
@@ -132,19 +126,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -173,13 +162,12 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(R.string.text_wait);
         if (payID) {
             day++;
-            //if (day > 30) day = 1;
             refThread();
             setTextView();
             setImageView();
         } else {
             Intent intent = new Intent(this, PayInfoActivity.class);
-            startActivity(intent);                                        //Запуск PayInfoActivity
+            startActivity(intent);
         }
     }
 
@@ -187,29 +175,28 @@ public class MainActivity extends AppCompatActivity {
         textView.setText(R.string.text_wait);
         if (payID) {
             day--;
-            //if (day < 1) day = 30;
             refThread();
             setTextView();
             setImageView();
         } else {
             Intent intent = new Intent(this, PayInfoActivity.class);
-            startActivity(intent);                                        //Запуск PayInfoActivity
+            startActivity(intent);
         }
     }
 
     public void onClickPP(View view) {
         textView.setText(R.string.text_wait);
         if (payID) {
+            Intent intent;
             if (bDayIsSet) {
-                Intent intent = new Intent(this, PersonalPredictionActivity.class);
-                startActivity(intent);                                    //Запуск PPActivity
+                intent = new Intent(this, PersonalPredictionActivity.class);
             } else {
-                Intent intent = new Intent(this, EnterBDayActivity.class);
-                startActivity(intent);                                    //Запуск EnterBDayActivity
+                intent = new Intent(this, EnterBDayActivity.class);
             }
+            startActivity(intent);
         } else {
             Intent intent = new Intent(this, PayInfoActivity.class);
-            startActivity(intent);                                        //Запуск PayInfoActivity
+            startActivity(intent);
         }
     }
 

@@ -1,14 +1,15 @@
-package ua.projekt_vedroid.mooncalendar;
+package ua.vedroid.mooncalendar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.GregorianCalendar;
 

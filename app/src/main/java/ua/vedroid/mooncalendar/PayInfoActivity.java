@@ -1,17 +1,17 @@
-package ua.projekt_vedroid.mooncalendar;
+package ua.vedroid.mooncalendar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-public class PayInfoActivity extends AppCompatActivity {
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
-    Intent intent;
+public class PayInfoActivity extends AppCompatActivity {
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class PayInfoActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        mock();             //Затычка
+                        mock();
                         finish();
                     }
                 });
@@ -44,7 +44,7 @@ public class PayInfoActivity extends AppCompatActivity {
         alert.show();
     }
 
-    private void mock() {                   //Покупка
+    private void mock() {
         SharedPreferences.Editor editor = MainActivity.mSettings.edit();
         editor.putBoolean(MainActivity.APP_PREFERENCES_pID, true);
         editor.apply();
@@ -52,7 +52,7 @@ public class PayInfoActivity extends AppCompatActivity {
         MainActivity.payID = true;
 
         intent = new Intent(this, EnterBDayActivity.class);
-        startActivity(intent);                                            //Запуск EnterBDayActivity
+        startActivity(intent);
         Toast.makeText(this, "Purchased.", Toast.LENGTH_LONG).show();
     }
 
@@ -67,7 +67,7 @@ public class PayInfoActivity extends AppCompatActivity {
 
     private void back() {
         intent = new Intent(this, MainActivity.class);
-        startActivity(intent);                                        //Запуск MainActivity
+        startActivity(intent);
         super.onBackPressed();
     }
 }
